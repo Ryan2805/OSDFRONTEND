@@ -1,0 +1,32 @@
+<form [formGroup]="gradeHistoryForm" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="class_id">Class ID</label>
+        <input id="class_id" type="text" formControlName="class_id">
+    </div>
+
+    <div>
+        <label for="student_id">Student ID</label>
+        <input id="student_id" type="text" formControlName="student_id">
+    </div>
+
+   
+    <button type="button" (click)="addGrade()">Add Grade</button>
+
+    
+    <div formArrayName="grades">
+        <div *ngFor="let grade of grades.controls; let i = index; trackBy: trackById" [formGroupName]="i">
+            <div>
+                <label for="score-{{ grade.value.id }}">Score:</label>
+                <input [id]="'score-' + grade.value.id" type="text" formControlName="score">
+            </div>
+            <div>
+                <label for="type-{{ grade.value.id }}">Type:</label>
+                <input [id]="'type-' + grade.value.id" type="text" formControlName="type">
+            </div>
+            
+            <button type="button" (click)="removeGrade(i)">Remove Grade</button>
+        </div>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
