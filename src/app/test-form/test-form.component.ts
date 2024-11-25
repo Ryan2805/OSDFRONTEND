@@ -1,52 +1,66 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, FormsModule, ReactiveFormsModule,FormBuilder,FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-test-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './test-form.component.html',
-  styleUrl: './test-form.component.css'
+  styleUrls: ['./test-form.component.css'] 
 })
 export class TestFormComponent {
   gradeHistoryForm: FormGroup;
+  formSubmitted = false;  
 
-    constructor(private formBuilder: FormBuilder) {
-        this.gradeHistoryForm = this.formBuilder.group({
-            class_id: [''],
-            student_id: [''],
-            grades: this.formBuilder.array([]) 
-        });
-    }
-
-    
-    get grades(): FormArray {
-        return this.gradeHistoryForm.get('grades') as FormArray;
-    }
-
-   
-    addGrade(): void {
-        const gradeGroup = this.formBuilder.group({
-            id: [this.generateId()],
-            type: [''], 
-            score: [''], 
-        });
-        this.grades.push(gradeGroup);
-    }
-    generateId(): string {
-
-      return 'grade-' + Math.random().toString(36).substr(2, 9);
+  constructor(private formBuilder: FormBuilder) {
+    this.gradeHistoryForm = this.formBuilder.group({
+      class_id: ['', [Validators.required, Validators.minLength(3)]], 
+      student_id: ['', Validators.required], 
+      grades: this.formBuilder.array([]) 
+    });
   }
 
-    removeGrade(index: number): void {
-      this.grades.removeAt(index);
+  get grades(): FormArray {
+    return this.gradeHistoryForm.get('grades') as FormArray;
   }
+
+  addGrade(): void {
+    const gradeGroup = this.formBuilder.group({
+      id: [this.generateId()],
+      type: ['', Validators.required], 
+      score: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+    });
+    this.grades.push(gradeGroup);
+  }
+
+  generateId(): string {
+    return 'grade-' + Math.random().toString(36).substr(2, 9);
+  }
+
+  removeGrade(index: number): void {
+    this.grades.removeAt(index);
+  }
+
   trackById(index: number, grade: any): string {
-    return grade.value.id; 
-}
+    return grade.value.id;
+  }
 
-    onSubmit() {
-        console.log('Form submitted with:');
-        console.table(this.gradeHistoryForm.value);
+  get class_id() {
+    return this.gradeHistoryForm.get('class_id');
+  }
+
+  get student_id() {
+    return this.gradeHistoryForm.get('student_id');
+  }
+
+  onSubmit() {
+    this.formSubmitted = true;  
+    if (this.gradeHistoryForm.valid) {
+      console.log('Form submitted with:');
+      console.table(this.gradeHistoryForm.value);
+    } else {
+      console.log('Form is not valid');
     }
+  }
 }

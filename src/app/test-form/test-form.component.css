@@ -1,0 +1,15 @@
+
+input.ng-invalid {
+    border-color: red;
+  }
+  
+ 
+  input.ng-touched.ng-invalid {
+    background-color: #fdd;
+  }
+  
+ 
+  small {
+    color: red;
+    font-size: 12px;
+  }

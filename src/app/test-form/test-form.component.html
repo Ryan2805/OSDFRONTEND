@@ -1,32 +1,56 @@
 <form [formGroup]="gradeHistoryForm" (ngSubmit)="onSubmit()">
+    <!-- Class ID Field -->
     <div>
-        <label for="class_id">Class ID</label>
-        <input id="class_id" type="text" formControlName="class_id">
+      <label for="class_id">Class ID</label>
+      <input id="class_id" type="text" formControlName="class_id">
+      <div *ngIf="class_id?.invalid && class_id?.touched">
+        Class ID is required and must be at least 3 letters.
+      </div>
     </div>
-
+  
+    <!-- Student ID Field -->
     <div>
-        <label for="student_id">Student ID</label>
-        <input id="student_id" type="text" formControlName="student_id">
+      <label for="student_id">Student ID</label>
+      <input id="student_id" type="text" formControlName="student_id">
+      <div *ngIf="student_id?.invalid && student_id?.touched">
+        Student ID is required.
+      </div>
     </div>
-
-   
+  
+    <!-- Add Grade Button -->
     <button type="button" (click)="addGrade()">Add Grade</button>
-
-    
+  
+    <!-- Grades Form Array -->
     <div formArrayName="grades">
-        <div *ngFor="let grade of grades.controls; let i = index; trackBy: trackById" [formGroupName]="i">
-            <div>
-                <label for="score-{{ grade.value.id }}">Score:</label>
-                <input [id]="'score-' + grade.value.id" type="text" formControlName="score">
-            </div>
-            <div>
-                <label for="type-{{ grade.value.id }}">Type:</label>
-                <input [id]="'type-' + grade.value.id" type="text" formControlName="type">
-            </div>
-            
-            <button type="button" (click)="removeGrade(i)">Remove Grade</button>
+      <div *ngFor="let grade of grades.controls; let i = index; trackBy: trackById" [formGroupName]="i">
+        <!-- Score Field for Each Grade -->
+        <div>
+          <label for="score-{{ grade.value.id }}">Score:</label>
+          <input [id]="'score-' + grade.value.id" type="text" formControlName="score">
+          <div *ngIf="grade.get('score')?.invalid && grade.get('score')?.touched">
+            Score is required and must be between 0 and 100.
+          </div>
         </div>
+  
+        <!-- Type Field for Each Grade -->
+        <div>
+          <label for="type-{{ grade.value.id }}">Type:</label>
+          <input [id]="'type-' + grade.value.id" type="text" formControlName="type">
+          <div *ngIf="grade.get('type')?.invalid && grade.get('type')?.touched">
+            Type is required.
+          </div>
+        </div>
+  
+        <!-- Remove Grade Button -->
+        <button type="button" (click)="removeGrade(i)">Remove Grade</button>
+      </div>
     </div>
-
-    <button type="submit">Submit</button>
-</form>
+  
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="gradeHistoryForm.invalid">Submit</button>
+  
+    <!-- Submit Feedback Message -->
+    <div *ngIf="formSubmitted && gradeHistoryForm.invalid">
+      <p style="color: red;">Please fix the errors above before submitting the form.</p>
+    </div>
+  </form>
