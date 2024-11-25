@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-test-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,MatButtonModule,MatFormFieldModule,MatCardModule,MatInputModule],
   templateUrl: './test-form.component.html',
   styleUrls: ['./test-form.component.css'] 
 })
