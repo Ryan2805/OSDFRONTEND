@@ -1,0 +1,24 @@
+<div *ngIf="drinks.length > 0; else noDrinks">
+    <ul>
+      <li *ngFor="let drink of drinks">
+        <mat-card>
+          <mat-card-title>{{ drink.name }}</mat-card-title>
+          <mat-card-content>
+            <p>Type: {{ drink.type }}</p>
+            <p>Volume: {{ drink.volume }} ml</p>
+            <p>Alcohol Content: {{ drink.alcoholContent }}%</p>
+            <p>Price: ${{ drink.price }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button (click)="updateDrink(drink.id, { name: drink.name, type: drink.type })">
+                Update
+              </button>
+            <button mat-button color="warn" (click)="removeDrink(drink._id)">Remove</button>
+          </mat-card-actions>
+        </mat-card>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noDrinks>
+    <p>No drinks available.</p>
+  </ng-template>

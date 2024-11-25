@@ -5,63 +5,61 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { DrinkService } from '../drink.service';
 @Component({
   selector: 'app-test-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,MatButtonModule,MatFormFieldModule,MatCardModule,MatInputModule],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatCardModule, MatInputModule],
   templateUrl: './test-form.component.html',
-  styleUrls: ['./test-form.component.css'] 
+  styleUrls: ['./test-form.component.css']
 })
 export class TestFormComponent {
-  gradeHistoryForm: FormGroup;
-  formSubmitted = false;  
+  drinkForm: FormGroup;
+  formSubmitted = false;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.gradeHistoryForm = this.formBuilder.group({
-      class_id: ['', [Validators.required, Validators.minLength(3)]], 
-      student_id: ['', Validators.required], 
-      grades: this.formBuilder.array([]) 
+  constructor(private formBuilder: FormBuilder, private drinkService: DrinkService) {
+    this.drinkForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      type: ['', Validators.required],
+      volume: ['', [Validators.required, Validators.min(1)]],
+      alcoholContent: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+      price: ['', [Validators.required, Validators.min(0)]],
     });
   }
 
-  get grades(): FormArray {
-    return this.gradeHistoryForm.get('grades') as FormArray;
+  get name() {
+    return this.drinkForm.get('name');
   }
 
-  addGrade(): void {
-    const gradeGroup = this.formBuilder.group({
-      id: [this.generateId()],
-      type: ['', Validators.required], 
-      score: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
-    });
-    this.grades.push(gradeGroup);
+  get type() {
+    return this.drinkForm.get('type');
   }
 
-  generateId(): string {
-    return 'grade-' + Math.random().toString(36).substr(2, 9);
+  get volume() {
+    return this.drinkForm.get('volume');
   }
 
-  removeGrade(index: number): void {
-    this.grades.removeAt(index);
+  get alcoholContent() {
+    return this.drinkForm.get('alcoholContent');
   }
 
-  trackById(index: number, grade: any): string {
-    return grade.value.id;
-  }
-
-  get class_id() {
-    return this.gradeHistoryForm.get('class_id');
-  }
-
-  get student_id() {
-    return this.gradeHistoryForm.get('student_id');
+  get price() {
+    return this.drinkForm.get('price');
   }
 
   onSubmit() {
-    this.formSubmitted = true;  
-    if (this.gradeHistoryForm.valid) {
-      console.log('Form submitted with:');
-      console.table(this.gradeHistoryForm.value);
+    this.formSubmitted = true;
+    if (this.drinkForm.valid) {
+      const newDrink = this.drinkForm.value;  
+      this.drinkService.addDrink(newDrink).subscribe(
+        (response) => {
+          console.log('Drink added successfully:', response);
+          this.drinkForm.reset();  
+        },
+        (error) => {
+          console.error('Error adding drink:', error);
+        }
+      );
     } else {
       console.log('Form is not valid');
     }
