@@ -6,14 +6,18 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { DrinkService } from './drink.service';  // Import DrinkService
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { AuthInterceptor } from './auth.interceptor';
+import { withInterceptors } from '@angular/common/http';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
+    provideHttpClient(withInterceptors([AuthInterceptor])),
+
     provideAnimationsAsync(),
-    DrinkService  // Provide DrinkService
+    
+    DrinkService, provideAnimationsAsync('noop')  // Provide DrinkService
   ],
 };
 

@@ -6,8 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DrinksListComponent } from './drinks-list/drinks-list.component';
-
-
+import { LoginComponent } from './login/login.component';
+import { Route } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,8 @@ import { DrinksListComponent } from './drinks-list/drinks-list.component';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    DrinksListComponent],
+    DrinksListComponent,
+    LoginComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']  
 })
