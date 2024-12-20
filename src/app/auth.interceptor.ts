@@ -6,30 +6,35 @@ import { Router } from '@angular/router';
 import { AuthCustomService } from './auth-custom.service';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
-  const router = inject(Router);
-  const authService = inject(AuthCustomService);
+  const router = inject(Router);
+  const authService = inject(AuthCustomService);
 
-  const apiUri = `${environment.apiUri}`;
+  const apiUri = environment.apiUri;
 
-  const jwt = localStorage.getItem('token');
+  const jwt = localStorage.getItem('token');
 
-  // we don't want to attach our token to a request to any other server
-  // so we check that the request is to our own api
+ 
+  if (req.url.startsWith(apiUri) && jwt) {
+    const authRequest = req.clone({
+      setHeaders: { Authorization: `Bearer ${jwt}` },
+    });
 
-  if (req.url.startsWith(apiUri) && jwt != '') {
-    const authRequest = req.clone({
-      setHeaders: { authorization: `Bearer ${jwt}` },
-    });
+    return next(authRequest).pipe(
+      catchError((err) => {
+        console.error(`Request failed with status ${err.status}`);
 
-    return next(authRequest).pipe(
-      catchError((err) => {
-        console.log('Request failed ' + err.status);
-        {
-        }
-        return throwError(() => err);
-      })
-    );
-  } else {
-    return next(req);
-  }
+        
+        if (err.status === 401 || err.status === 403) {
+          authService.logout();
+          router.navigate(['/login']);
+        }
+
+        return throwError(() => err);
+      })
+    );
+  }
+
+  
+  return next(req);
 };
+

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { AuthCustomService } from '../auth-custom.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,19 +27,27 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  returnUrl: string = '/'; // Default to root if no returnUrl is provided
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthCustomService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute // Inject ActivatedRoute to handle query parameters
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  ngOnInit() {
+    // Get the returnUrl query parameter or set default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    console.log('Return URL:', this.returnUrl);
   }
 
   onSubmit() {
@@ -48,7 +56,8 @@ export class LoginComponent {
     this.authService.login(email, password).subscribe({
       next: () => {
         console.log('User is logged in');
-        this.router.navigateByUrl('/');
+        // Navigate to the returnUrl after successful login
+        this.router.navigateByUrl(this.returnUrl);
       },
       error: (err: Error) => {
         console.error(err.message);
@@ -64,4 +73,3 @@ export class LoginComponent {
     });
   }
 }
-
