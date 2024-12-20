@@ -7,8 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DrinksListComponent } from './drinks-list/drinks-list.component';
 import { LoginComponent } from './login/login.component';
-
-
+import { LogoutComponent } from './logout/logout.component';
+import { NavbarComponent } from './navbar/navbar.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -20,7 +20,9 @@ import { LoginComponent } from './login/login.component';
     MatButtonModule,
     MatIconModule,
     DrinksListComponent,
-    LoginComponent],
+    LoginComponent,
+    NavbarComponent,
+    LogoutComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']  
 })

@@ -12,11 +12,12 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
+    CommonModule,
     MatSnackBarModule,
     MatInputModule,
     ReactiveFormsModule,
@@ -29,14 +30,14 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  returnUrl: string = '/'; // Default to root if no returnUrl is provided
+  returnUrl: string = '/'; 
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthCustomService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute // Inject ActivatedRoute to handle query parameters
+    private route: ActivatedRoute 
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Get the returnUrl query parameter or set default to '/'
+    
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     console.log('Return URL:', this.returnUrl);
   }
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe({
       next: () => {
         console.log('User is logged in');
-        // Navigate to the returnUrl after successful login
+        
         this.router.navigateByUrl(this.returnUrl);
       },
       error: (err: Error) => {

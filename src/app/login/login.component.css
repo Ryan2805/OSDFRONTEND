@@ -1,3 +1,70 @@
+/* Center the login form on the page */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5; /* Light background for the entire page */
+}
+
+/* Form styling */
+.login-form {
+  background-color: #ffffff; /* White background for the form */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add a light shadow */
+  max-width: 400px;
+  width: 100%;
+  margin: 20px;
+}
+
+/* Title Styling */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #333;
+}
+
+/* Styling the form fields */
+.form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-label {
+  color: #333;
+}
+
+mat-error {
+  font-size: 0.8rem;
+  color: red;
+}
+
+/* Button Styling */
+.submit-button {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+  .login-form {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+
 .error-snackbar {
     background-color: #f44336; 
     color: white;
