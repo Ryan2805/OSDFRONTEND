@@ -7,4 +7,5 @@ export interface User {
     lastUpdated?: Date;    
     password?: string;    
     hashedPassword?: string; 
+    role: string;  
   }

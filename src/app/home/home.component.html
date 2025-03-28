@@ -1,33 +1,41 @@
 <body>
-    <div class="main-content"> <!-- Wrap everything except footer inside this div -->
+    <div class="main-content">
+      
+      <section id="about" class="py-5 bg-light">
+        <div class="container">
+          <h2 class="text-center mb-4">About Drinkify</h2>
+          <div class="row">
+            <div class="col-md-6 offset-md-3"> 
+              <p>
+                Drinkify is your one-stop destination to explore a world of beverages. Whether you prefer a
+                refreshing cocktail, a healthy smoothie, or a classic coffee, we've got it all.
+              </p>
+              <p>
+                Our mission is to provide drink enthusiasts with a curated collection of recipes, tips, and
+                inspiration. We believe that every sip should be an experience.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
   
-        <section id="about" class="py-5 bg-light">
-            <div class="container">
-                <h2 class="text-center mb-4">About Drinkify</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p>
-                            Drinkify is your one-stop destination to explore a world of beverages. Whether you prefer a
-                            refreshing cocktail, a healthy smoothie, or a classic coffee, we've got it all.
-                        </p>
-                        <p>
-                            Our mission is to provide drink enthusiasts with a curated collection of recipes, tips, and
-                            inspiration. We believe that every sip should be an experience.
-                        </p>
-                    </div>
-                   
-                </div>
-            </div>
-        </section>
-
-       
-        <section id="contact" class="py-5">
-            <div class="container text-center">
-                <h2 class="mb-4">Contact Us</h2>
-                <p>If you have any questions, feel free to reach out to us!</p>
-                <a href="mailto:info@drinkify.com" class="btn btn-primary">Email Us</a>
-            </div>
-        </section>
+      <section id="contact" class="py-5">
+        <div class="container text-center">
+          <h2 class="mb-4">Contact Us</h2>
+          <p>If you have any questions, feel free to reach out to us!</p>
+          <a href="mailto:info@drinkify.com" class="btn btn-primary mb-4">Email Us</a> 
+          
+          
+          <div class="d-flex justify-content-center mb-4">
+            <button class="btn btn-info" (click)="getDrinkOfTheDay()">Get Drink of the Day</button>
+          </div>
+          
+          
+          <div *ngIf="drinkOfTheDay" class="mt-4">
+            <h4>Drink of the Day: {{ drinkOfTheDay }}</h4>
+          </div>
+        </div>
+      </section>
     </div>
-
-</body>
+  </body>
+  

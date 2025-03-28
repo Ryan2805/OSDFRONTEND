@@ -6,6 +6,8 @@ import { LoginComponent } from './login/login.component';
 import { authGuard } from './auth.guard';
 import { DrinksListComponent } from './drinks-list/drinks-list.component';
 import { LogoutComponent } from './logout/logout.component';
+import { CocktailComponent } from './cocktail/cocktail.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'home', redirectTo: '/' },
@@ -14,4 +16,6 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'drinks', component: DrinksListComponent},
     { path: 'logout', component: LogoutComponent},
+    { path: 'cocktails', component: CocktailComponent},
+    { path: 'admin', component: AdminDashboardComponent},
 ];

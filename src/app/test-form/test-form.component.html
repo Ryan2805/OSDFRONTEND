@@ -1,48 +1,65 @@
-<form [formGroup]="drinkForm" (ngSubmit)="onSubmit()">
-  
-  <mat-form-field appearance="fill">
-    <mat-label>Drink Name</mat-label>
-    <input matInput id="name" type="text" formControlName="name">
-    <mat-error *ngIf="name?.invalid && name?.touched">
-      Drink Name is required and must be at least 3 characters long.
-    </mat-error>
-  </mat-form-field>
+<form [formGroup]="drinkForm" (ngSubmit)="onSubmit()" class="container my-5 shadow p-4 rounded bg-light">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <h3 class="text-center text-primary mb-4">Add A Drink</h3>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Type</mat-label>
-    <input matInput id="type" type="text" formControlName="type">
-    <mat-error *ngIf="type?.invalid && type?.touched">
-      Type is required.
-    </mat-error>
-  </mat-form-field>
+      <div class="mb-3">
+        <label for="name" class="form-label">Drink Name</label>
+        <input matInput id="name" type="text" formControlName="name" class="form-control">
+        <div *ngIf="name?.invalid && (name?.touched || formSubmitted)" class="form-text text-danger">
+          Drink Name is required and must be at least 3 characters long.
+        </div>
+      </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Volume (ml)</mat-label>
-    <input matInput id="volume" type="number" formControlName="volume">
-    <mat-error *ngIf="volume?.invalid && volume?.touched">
-      Volume is required and must be a positive number.
-    </mat-error>
-  </mat-form-field>
+      <div class="mb-3">
+        <label for="type" class="form-label">Type</label>
+        <input matInput id="type" type="text" formControlName="type" class="form-control">
+        <div *ngIf="type?.invalid && (type?.touched || formSubmitted)" class="form-text text-danger">
+          Type is required.
+        </div>
+      </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Alcohol Content (%)</mat-label>
-    <input matInput id="alcoholContent" type="number" formControlName="alcoholContent">
-    <mat-error *ngIf="alcoholContent?.invalid && alcoholContent?.touched">
-      Alcohol Content is required and must be between 0 and 100.
-    </mat-error>
-  </mat-form-field>
+      <div class="mb-3">
+        <label for="volume" class="form-label">Volume (ml)</label>
+        <input matInput id="volume" type="number" formControlName="volume" class="form-control">
+        <div *ngIf="volume?.invalid && (volume?.touched || formSubmitted)" class="form-text text-danger">
+          Volume is required and must be a positive number.
+        </div>
+      </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Price ($)</mat-label>
-    <input matInput id="price" type="number" formControlName="price">
-    <mat-error *ngIf="price?.invalid && price?.touched">
-      Price is required and must be a positive number.
-    </mat-error>
-  </mat-form-field>
+      <div class="mb-3">
+        <label for="alcoholContent" class="form-label">Alcohol Content (%)</label>
+        <input matInput id="alcoholContent" type="number" formControlName="alcoholContent" class="form-control">
+        <div *ngIf="alcoholContent?.invalid && (alcoholContent?.touched || formSubmitted)" class="form-text text-danger">
+          Alcohol Content is required and must be between 0 and 100.
+        </div>
+      </div>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="drinkForm.invalid">Submit</button>
+      <div class="mb-3">
+        <label for="price" class="form-label">Price ($)</label>
+        <input matInput id="price" type="number" formControlName="price" class="form-control">
+        <div *ngIf="price?.invalid && (price?.touched || formSubmitted)" class="form-text text-danger">
+          Price is required and must be a positive number.
+        </div>
+      </div>
 
-  <div *ngIf="formSubmitted && drinkForm.invalid">
-    <p style="color: red;">Please fix the errors above before submitting the form.</p>
+      <div class="mb-3">
+        <label for="imageUrl" class="form-label">Image URL</label>
+        <input matInput id="imageUrl" type="text" formControlName="imageUrl" class="form-control">
+        <div *ngIf="imageUrl?.invalid && (imageUrl?.touched || formSubmitted)" class="form-text text-danger">
+          Please provide a valid image URL (must start with http or https).
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button mat-raised-button color="primary" type="submit" [disabled]="drinkForm.invalid" class="btn btn-primary w-100">
+          Submit
+        </button>
+      </div>
+
+      <div *ngIf="formSubmitted && drinkForm.invalid" class="mt-3 text-center text-danger">
+        <p>Please fix the errors above before submitting the form.</p>
+      </div>
+    </div>
   </div>
 </form>

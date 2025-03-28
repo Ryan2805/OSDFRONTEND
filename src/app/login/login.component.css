@@ -1,4 +1,4 @@
-/* Center the login form on the page */
+/* Center the login/signup form on the page */
 .login-container {
   display: flex;
   justify-content: center;
@@ -53,6 +53,22 @@ mat-error {
   margin-top: 10px;
 }
 
+/* Toggle text */
+.toggle-text {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.toggle-text a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.toggle-text a:hover {
+  text-decoration: underline;
+}
+
 /* Responsiveness */
 @media (max-width: 600px) {
   .login-form {
@@ -64,9 +80,15 @@ mat-error {
   }
 }
 
-
+/* Snackbar styles */
 .error-snackbar {
-    background-color: #f44336; 
-    color: white;
-    font-weight: bold;
-  }
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+}
+
+.success-snackbar {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}

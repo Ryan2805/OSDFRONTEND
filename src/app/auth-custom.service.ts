@@ -15,85 +15,49 @@ export class AuthCustomService {
   private Uri = `${environment.apiUri}`;
 
   constructor(private http: HttpClient) {
-    console.log('Initializing AuthCustomService...');
-
     this.currentUser$ = new BehaviorSubject<User | null>(
-      JSON.parse(localStorage.getItem('user') || '{}')
+      JSON.parse(localStorage.getItem('user') || 'null')
     );
-    console.log('Initial user from localStorage:', this.currentUser$.value);
-
-    const token = localStorage.getItem('token') || '';
-    console.log('Initial token from localStorage:', token);
-
-    if (token !== '') {
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const expires = payload.exp * 1000;
-
-        console.log('Token payload:', payload);
-        console.log('Token expires at:', new Date(expires));
-
-        if (expires > Date.now()) {
-          console.log('Token is valid. User is authenticated.');
-          this.isAuthenticated$ = new BehaviorSubject<boolean>(true);
-          this.startAuthenticateTimer(expires);
-        } else {
-          console.log('Token has expired. User is not authenticated.');
-          this.isAuthenticated$ = new BehaviorSubject<boolean>(false);
-        }
-      } catch (error) {
-        console.error('Error parsing token:', error);
-        this.isAuthenticated$ = new BehaviorSubject<boolean>(false);
-      }
-    } else {
-      console.log('No token found. User is not authenticated.');
-      this.isAuthenticated$ = new BehaviorSubject<boolean>(false);
-    }
+    this.isAuthenticated$ = new BehaviorSubject<boolean>(
+      !!localStorage.getItem('token')
+    );
   }
 
   public login(email: string, password: string): Observable<any> {
-    console.log('Attempting login for email:', email);
-
     return this.http
-      .post<any>(`${this.Uri}/auth`, { email: email, password: password })
+      .post<any>(`${this.Uri}/auth`, { email, password })
       .pipe(
         map((body) => {
-          console.log('Login response body:', body);
-
-          try {
-            const payload = JSON.parse(atob(body.accessToken.split('.')[1]));
-            const expires = payload.exp * 1000;
-
-            console.log('Token payload:', payload);
-            console.log('Token expires at:', new Date(expires));
-
-            localStorage.setItem('token', body.accessToken);
-            console.log('Token saved to localStorage.');
-
-            localStorage.setItem('user', JSON.stringify(payload));
-            console.log('User saved to localStorage.');
-
-            this.currentUser$.next(payload as User);
-            this.isAuthenticated$.next(true);
-
-            this.startAuthenticateTimer(expires);
-
-            console.log('Login successful.');
-          } catch (error) {
-            console.error('Error processing login response:', error);
-          }
-
+          this.processAuthResponse(body);
           return;
         })
       );
   }
 
+  public signup(userData: any): Observable<any> {
+    return this.http.post(`${this.Uri}/users/signup`, userData);
+  }
+
+  private processAuthResponse(body: any) {
+    try {
+      const payload = JSON.parse(atob(body.accessToken.split('.')[1]));
+      const expires = payload.exp * 1000;
+
+      localStorage.setItem('token', body.accessToken);
+      localStorage.setItem('user', JSON.stringify(payload));
+
+      this.currentUser$.next(payload as User);
+      this.isAuthenticated$.next(true);
+
+      this.startAuthenticateTimer(expires);
+    } catch (error) {
+      console.error('Error processing authentication response:', error);
+    }
+  }
+
   private startAuthenticateTimer(expires: number) {
     const timeout = expires - Date.now() - 60 * 1000;
-    console.log('Authentication timer set for:', timeout, 'milliseconds');
-
     this.authenticateTimeout = setTimeout(() => {
-      console.log('Authentication timer expired. Logging out...');
       if (this.isAuthenticated$.value) {
         this.logout();
       }
@@ -101,14 +65,20 @@ export class AuthCustomService {
   }
 
   public logout() {
-    console.log('Logging out user...');
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-
     this.currentUser$.next(null);
     this.isAuthenticated$.next(false);
+  }
 
-    console.log('User logged out successfully.');
+  public getTotalUsers(): Observable<number> {
+    return this.http.get<{ totalUsers: number }>(`${this.Uri}/users/allusers`)
+      .pipe(
+        map(response => response.totalUsers) // Extract the totalUsers property
+      );
+  }
+  // Fetch total number of drinks
+  public getTotalDrinks(): Observable<number> {
+    return this.http.get<number>(`${this.Uri}/drinks/alldrinks`);
   }
 }
-

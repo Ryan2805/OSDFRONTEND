@@ -1,0 +1,57 @@
+.admin-dashboard {
+    padding: 20px;
+  }
+  
+  .dashboard-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .stat {
+    background-color: #f3f3f3;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 30%;
+  }
+  
+  .stat h3 {
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .stat p {
+    font-size: 24px;
+    color: #007bff;
+  }
+  
+  .recent-activities {
+    margin-top: 30px;
+  }
+  
+  .recent-activities ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .recent-activities li {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .recent-activities li:last-child {
+    border-bottom: none;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    font-size: 18px;
+  }

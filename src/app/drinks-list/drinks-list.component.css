@@ -1,28 +1,80 @@
-mat-card {
-    margin-bottom: 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  mat-card-title {
-    font-size: 1.5rem;
-    color: #00796b;
-  }
-  
-  mat-card-content {
-    font-size: 1rem;
-    color: #555;
-  }
-  
-  mat-card-actions button {
-    margin-left: 8px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  mat-card-actions {
-    display: flex;
-    justify-content: flex-end;
-  }
+.dark-background {
+  background-color: #333; 
+  color: white; 
+  min-height: 100vh; 
+  padding: 20px; 
+}
+.drink-image {
+  max-height: 200px;
+  object-fit: cover;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+
+.card {
+  background-color: #f8f9fa; 
+  border: 1px solid #e0e0e0; 
+  border-radius: 8px; 
+  transition: box-shadow 0.3s ease, transform 0.3s ease; 
+}
+
+/* Card shadow effect on hover */
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+  transform: translateY(-5px);
+}
+
+
+.card-title {
+  color: #007bff;
+  font-size: 1.5rem; 
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+
+.card-text {
+  font-size: 1rem;
+  color: #6c757d; 
+  margin-bottom: 8px;
+}
+
+
+.card-footer .btn {
+  margin-right: 10px;
+  border-radius: 4px; 
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+
+.card-body {
+  padding: 15px;
+}
+
+.row {
+  margin-top: 20px;
+}
+
+.col-md-4 {
+  margin-bottom: 20px;
+}

@@ -1,12 +1,36 @@
-mat-form-field {
-  width: 100%;
+
+form {
+  background-color: #f8f9fa;
 }
 
 button {
-  margin-top: 10px;
+  background-color: #007bff; 
+  color: white;
+}
+
+button:hover {
+  background-color: #0056b3; 
+  border-color: #0056b3;
 }
 
 .mat-error {
   font-size: 12px;
   color: red;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.container {
+  max-width: 600px; 
+}
+
+h3 {
+  color: #007bff; 
+}
+
+
+.form-text {
+  font-size: 0.875rem; 
 }

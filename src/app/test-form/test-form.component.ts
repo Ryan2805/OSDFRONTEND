@@ -24,6 +24,7 @@ export class TestFormComponent {
       volume: ['', [Validators.required, Validators.min(1)]],
       alcoholContent: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
       price: ['', [Validators.required, Validators.min(0)]],
+      imageUrl: ['', [Validators.required, Validators.pattern('https?://.+')]] // New field for image URL
     });
   }
 
@@ -47,10 +48,14 @@ export class TestFormComponent {
     return this.drinkForm.get('price');
   }
 
+  get imageUrl() {
+    return this.drinkForm.get('imageUrl');
+  }
+
   onSubmit() {
     this.formSubmitted = true;
     if (this.drinkForm.valid) {
-      const newDrink = this.drinkForm.value;  
+      const newDrink = this.drinkForm.value;
       this.drinkService.addDrink(newDrink).subscribe(
         (response) => {
           console.log('Drink added successfully:', response);
